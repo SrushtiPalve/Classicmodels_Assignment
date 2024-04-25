@@ -1,6 +1,6 @@
 USE classicmodels;
 
-												                                        -- DAY 3 
+-- DAY 3 
                                             
 /* 1) Show customer number, customer name, state and credit limit from customers table for below conditions. 
 		Sort the results by highest to lowest values of creditLimit.
@@ -21,8 +21,7 @@ SELECT DISTINCT productLine
 FROM products
 WHERE productLine LIKE "%cars";
 
-												-- DAY 4
-                                                
+-- DAY 4                                                
 /* 1) Show the orderNumber, status and comments from orders table for shipped status only. 
 	If some comments are having null values then show them as “-“.
 */
@@ -42,6 +41,7 @@ WHERE status = "Shipped";
 		● Sales Rep then “SR” 
 		● Containing VP word then “VP”
 */
+
 SELECT employeeNumber, firstName, jobTitle,
 CASE
 	WHEN jobTitle LIKE "President" THEN "P"
@@ -52,10 +52,10 @@ CASE
 END    AS JobTitleAbbreviation
 FROM employees;
 
-												-- DAY 5
-                                                
+-- DAY 5                                       
 /* 1) For every year, find the minimum amount value from payments table
 */
+
 SELECT 
 	DISTINCT(YEAR(paymentDate)) AS Year, 
 	MIN(amount) Min_Amount
@@ -66,6 +66,7 @@ ORDER BY YEAR(paymentDate);
 /*2) For every year and every quarstudentster, find the unique customers and total orders from orders table. 
 	Make sure to show the quarter as Q1,Q2 etc.
 */
+
 SELECT YEAR(orderDate) AS Year, 
 	CONCAT("Q", QUARTER(orderDate)) Quarter, 
     COUNT(DISTINCT customerNumber) AS Unique_Customers,
@@ -77,6 +78,7 @@ GROUP BY Year,Quarter;
 with filter on total amount as 500000 to 1000000. 
 Sort the output by total amount in descending mode. [ Refer. Payments Table] 
 */
+
 SELECT 
 	DATE_FORMAT(paymentDate, '%b') AS Month,
     CONCAT(FORMAT(SUM(amount)/1000,0),'K') as Formatted_Amount
@@ -86,8 +88,7 @@ HAVING SUM(amount) BETWEEN 500000 AND 1000000
 ORDER BY SUM(amount) DESC;
 
 
-												-- DAY 6
-                                                
+-- DAY 6
 /*1) Create a journey table with following fields and constraints.
 	● Bus_ID (No null values)
 	● Bus_Name (No null values)
@@ -142,8 +143,7 @@ No_of_shows INT CHECK(No_of_shows>=0)
 SELECT * FROM movies;
 DESCRIBE movies;
 
-/*4)	Create the following tables. Use auto increment wherever applicable
-
+/*4)Create the following tables. Use auto increment wherever applicable
 a. Product
 ✔	product_id - primary key
 ✔	product_name - cannot be null and only unique values are allowed
@@ -188,12 +188,12 @@ Balance_Stock INT
 SELECT * FROM stock;
 DESCRIBE stock;
 
-												-- DAY 7
-                                                
+-- DAY 7                                               
 /* 1) Show employee number, Sales Person (combination of first and last names of employees), 
 	unique customers for each employee number and sort the data by highest to lowest unique customers.
 Tables: Employees, Customers
 */
+
 SELECT * FROM employees;
 SELECT * FROM customers;
 SELECT e.employeeNumber,
@@ -209,6 +209,7 @@ ORDER BY COUNT(c.customerName) DESC;
 		Sort the data by customer number.
 Tables: Customers, Orders, Orderdetails, Products
 */
+
 SELECT * FROM customers;
 SELECT * FROM orders;
 SELECT * FROM orderDetails;
@@ -293,8 +294,7 @@ FROM  Project as manager
 JOIN  Project as employee on manager.Emp_ID = employee.Manager_ID
 ORDER BY Manager_Name;
 
-												-- DAY 8
-                                                
+-- DAY 8                                                
 /*Create table facility. Add the below fields into it.
 ●	Facility_ID
 ●	Name
@@ -319,7 +319,7 @@ ADD COLUMN City VARCHAR(100) NOT NULL AFTER Name;
 
 DESCRIBE Facility;
 
-												-- DAY 9
+-- DAY 9
 /*Create table university with below fields.
 ●	ID
 ●	Name
@@ -347,8 +347,7 @@ UPDATE university
 SET Name = REPLACE(TRIM(Name), 'University', ' University')
 WHERE Name LIKE '%University';
 
-												-- DAY 10
-                                                
+-- DAY 10                                                
 /*Create the view products status. Show year wise total products sold. 
 Also find the percentage of total value for each year. 
 The output should look as shown in below figure.
@@ -370,8 +369,7 @@ ORDER BY COUNT(o.orderDate) DESC;
 
 SELECT * FROM products_status ;
 
-												-- DAY 11
-                                                
+-- DAY 11
 /*1) Create a stored procedure GetCustomerLevel which takes input as customer number 
 and gives the output as either Platinum, Gold or Silver as per below criteria.
 Table: Customers
@@ -379,6 +377,7 @@ Table: Customers
 ●	Gold: creditLimit is between 25000 to 100000
 ●	Silver: creditLimit < 25000
 */
+
 select * from customers;
 DELIMITER //
 
@@ -408,6 +407,7 @@ CALL GetCustomerLevel(103);
 country wise total amount as an output. Format the total amount to nearest thousand unit (K) 
 Tables: Customers, Payments
 */
+
 select * from customers;
 select * from payments;
 
@@ -433,8 +433,7 @@ END //
 
 DELIMITER ;
 
-												-- DAY 12
-                                                
+-- DAY 12                                                
 /*1) Calculate year wise, month name wise count of orders and year over year (YoY) percentage change. 
 Format the YoY values in no decimals and show in % sign.
 Table: Orders
@@ -489,8 +488,8 @@ RETURNS VARCHAR(50)
 DETERMINISTIC
 BEGIN
 	DECLARE years INT;
-    DECLARE months INT;
-    DECLARE age VARCHAR(50);
+	DECLARE months INT;
+ 	DECLARE age VARCHAR(50);
 
 SET years = TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE());
 SET months = TIMESTAMPDIFF(MONTH, date_of_birth, CURDATE()) % 12;
@@ -505,11 +504,11 @@ DELIMITER ;
 SELECT Emp_ID, Name, DOB, calculate_age(DOB) AS Age 
 FROM Emp_UDF;
 
-												-- DAY 13
-                                                
+-- DAY 13                                                
 /*1) Display the customer numbers and customer names from customers table who have not placed any orders using subquery
 Table: Customers, Orders
 */
+
 SELECT * FROM customers;
 SELECT * FROM orders;
 
@@ -522,6 +521,7 @@ WHERE c.customerNumber NOT IN (SELECT o.customerNumber FROM orders o);
 and get the customer number, customer name, count of orders for every customer. (15-02-2024 – 12:45:00)
 Table: Customers, Orders
 */
+
 SELECT * FROM customers;
 SELECT * FROM orders;
 
@@ -554,6 +554,7 @@ GROUP BY o.ordernumber;
 /*4) For each ordernumber count the number of products and then find the min and max of the values among count of orders.
 Table: Orderdetails
 */
+
 SELECT * FROM orderdetails;
 SELECT 
 	MAX(product_count) AS "Max(Total)",
@@ -567,6 +568,7 @@ FROM (SELECT orderNumber,
 /*5) Find out how many product lines are there for which the buy price value is greater than the average of buy price value. 
 Show the output as product line and its count.
 */
+
 SELECT * FROM products;
 
 SELECT 
@@ -615,8 +617,7 @@ END //
 
 DELIMITER ;
 
-												-- DAY 15
-                                                
+-- DAY 15                                               
 /*Create the table Emp_BIT. Add below fields in it.
 ●	Name
 ●	Occupation
